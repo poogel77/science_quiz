@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>SCIENCE QUIZ</title>
+	<link rel="stylesheet"  href="css/jquery.mobile.min.css">
+	<style>
+		#homeBanner {
+			width: 100%;
+		}
+		.center {
+			text-align: center;
+			margin-left: auto;
+			margin-right:auto;
+		}
+		.banner {
+			display:block;
+			width: 100%;
+		}
+		#qrcode {
+			display:block;	
+			margin-left: auto;
+			margin-right:auto;
+		}
+		#map2 {
+			margin-left: auto;
+			margin-right:auto;
+			width: 320px;
+			height: 320px;  
+		}
+		
+	</style>
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<link rel="stylesheet" href="themes/test.min.css" />
+	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="js/jquery.js"></script>
+    <script>
+    /** Simple JavaScript Quiz
+     * version 0.1.0
+     * http://journalism.berkeley.edu
+     * created by: Jeremy Rue @jrue
+     *
+     * Copyright (c) 2013 The Regents of the University of California
+     * Released under the GPL Version 2 license
+     * http://www.opensource.org/licenses/gpl-2.0.php
+     * This program is distributed in the hope that it will be useful, but
+     * WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     */
+    var quiztitle = "Chapter 1 - Interaction Among Living Things.";
+    /**
+    * Set the information about your questions here. The correct answer string needs to match
+    * the correct choice exactly, as it does string matching. (case sensitive)
+    *
+    */
+    var quiz = [
+        {
+            "question"      :   "Q1: What is the effect of competition between living things in a habitat?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "It can cause environmental pollution",
+                                    "It may reduce the population of the organisms that are competing",
+                                    "It can increase the number of living things that are competing",
+                                    "It ensures the survival of living species"
+                                ],
+            "correct"       :   "It may reduce the population of the organisms that are competing",
+            "explanation"   :   "It may reduce the population of the organisms that are competing",
+        },
+        {
+            "question"      :   "Q2: Which group of animals in Figure 1 compete among themselves for food?",
+            "image"         :   "2.jpg",
+            "choices"       :   [
+                                    "P only",
+                                    "Q only",
+                                    "P and Q",
+                                    "Q and R"
+                                ],
+            "correct"       :   "P only",
+            "explanation"   :   "P only",
+        },
+        {
+            "question"      :   "Q3: Which of the following basic needs can cause competition among plants when in limited supply?",
+            "image"         :   "3.jpg",
+            "choices"       :   [
+                                    "II and III only",
+                                    "II, III and IV only",
+                                    "I, II and IV only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "II, III and IV only",
+            "explanation"   :   "II, III and IV only",
+        },
+		{
+            "question"      :   "Q4: Based on Figure 2, in which pot does the most competition for water and minerals occur?",
+            "image"         :   "4.jpg",
+            "choices"       :   [
+                                    "I and II only",
+                                    "II only",
+                                    "II and III only",
+                                    "I, II and III"
+                                ],
+            "correct"       :   "II and III only",
+            "explanation"   :   "II and III only",
+        },
+		{
+            "question"      :   "Q5:Competition only takes place when",
+            "image"         :   "",
+            "choices"       :   [
+                                    "basic needs become limited",
+                                    "population increases",
+                                    "there are more females than male species in a habitat",
+                                    "the number of living things in a habitat increases"
+                                ],
+            "correct"       :   "basic needs become limited",
+            "explanation"   :   "basic needs become limited",
+        },
+		{
+            "question"      :   "Q6: Which of the following animals are threatened with extinction?",
+            "image"         :   "6.jpg",
+            "choices"       :   [
+                                    "I and II only",
+                                    "I and III only",
+                                    "I, III and IV only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "I, III and IV only",
+            "explanation"   :   "I, III and IV only",
+        },
+        {
+            "question"      :   "Q7: What is the negative effect of the rampant building of houses?",
+            "image"         :   "7.jpg",
+            "choices"       :   [
+                                    "I and II only",
+                                    "I and III only",
+                                    "II, III and IV only",
+                                    "I, II, III and IV only"
+                                ],
+            "correct"       :   "II, III and IV only",
+            "explanation"   :   "II, III and IV only",
+        },
+        {
+            "question"      :   "Q8: Tree-clearing without proper planning can cause soil erosion. What is the negative effect of soil erosion?",
+            "image"         :   "8.jpg",
+            "choices"       :   [
+                                    "II and III only",
+                                    "II, III and IV only",
+                                    "I, II and IV only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "II, III and IV only",
+            "explanation"   :   "II, III and IV only",
+        },
+		{
+            "question"      :   "Q9: Which of the following is an effort to conserve wildlife?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Intensive logging",
+                                    "Construction of more dams",
+                                    "Commercial breeding of chickens",
+                                    "The setting up of forest reserves"
+                                ],
+            "correct"       :   "The setting up of forest reserves",
+            "explanation"   :   "The setting up of forest reserves",
+        },
+		{
+            "question"      :   "Q10 :Which of the following animals is not under protection?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Leatherback turtles",
+                                    "Tigers",
+                                    "Hornbills",
+                                    "Giraffes"
+                                ],
+            "correct"       :   "Giraffes",
+            "explanation"   :   "Giraffes",
+        },
+		{
+            "question"      :   "Q11: The animal in Figure 3 is threatened with extinction due to illegal hunting.It is hunted for its",
+            "image"         :   "11.jpg",
+            "choices"       :   [
+                                    "I, II and III only",
+                                    "I, II and IV only",
+                                    "II, III and IV only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "I, II and IV only",
+            "explanation"   :   "I, II and IV only",
+        },
+        {
+            "question"      :   "Q12: Which of the following is not the importance of plants in relation to living things in our universe?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "To supply carbon dioxide to animals",
+                                    "To supply food to animals",
+                                    "To supply oxygen to animals",
+                                    "To control the surrounding temperature"
+                                ],
+            "correct"       :   "To supply carbon dioxide to animals",
+            "explanation"   :   "To supply carbon dioxide to animals",
+        },
+        {
+            "question"      :   "Q13: The rhinoceros is threatened with extinction due to the hunting activities of humans for its",
+            "image"         :   "",
+            "choices"       :   [
+                                    "horn",
+                                    "tusk",
+                                    "skin",
+                                    "oil"
+                                ],
+            "correct"       :   "horn",
+            "explanation"   :   "horn",
+        },
+		{
+            "question"      :   "Q14: Why do pigeon orchids grow on other plants?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "To enable their flowers to be pollinated more easily by insects such as bees",
+                                    "To absorb minerals from the surface of the tree bark",
+                                    "To obtain food from that plant",
+                                    "To avoid being eaten by animals such as goats"
+                                ],
+            "correct"       :   "To absorb minerals from the surface of the tree bark",
+            "explanation"   :   "To absorb minerals from the surface of the tree bark",
+        },
+		{
+            "question"      :   "Q15:What are the contributions of animals to human beings?",
+            "image"         :   "15.jpg",
+            "choices"       :   [
+                                    "I and II only",
+                                    "I and III only",
+                                    "I, II and IV only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "I, II and IV only",
+            "explanation"   :   "I, II and IV only",
+        },
+		{
+            "question"      :   "Q16: The animal conservation programme in Rantau Abang, Terengganu is carried out to protect",
+            "image"         :   "",
+            "choices"       :   [
+                                    "turtles",
+                                    "lions",
+                                    "rhinoceros",
+                                    "gaurs"
+                                ],
+            "correct"       :   "turtles",
+            "explanation"   :   "turtles",
+        },
+        {
+            "question"      :   "Q17: Soil pollution is caused by the following factors except",
+            "image"         :   "",
+            "choices"       :   [
+                                    "throwing rubbish rampantly",
+                                    "planting trees without proper planning",
+                                    "using fertilisers without control",
+                                    "using excessive pesticides"
+                                ],
+            "correct"       :   "planting trees without proper planning",
+            "explanation"   :   "planting trees without proper planning",
+        },
+        {
+            "question"      :   "Q18: The steps taken to control landslides on steep hillslopes are",
+            "image"         :   "18.jpg",
+            "choices"       :   [
+                                    "P and Q only",
+                                    "P and R only",
+                                    "Q and R only",
+                                    "P, Q and R"
+                                ],
+            "correct"       :   "P and Q only",
+            "explanation"   :   "P and Q only",
+        },
+		{
+            "question"      :   "Q19: The animal in Figure 4 is faced with the threat of extinction because it is being hunted for its",
+            "image"         :   "19.jpg",
+            "choices"       :   [
+                                    "skin",
+                                    "oil",
+                                    "fur",
+                                    "organs"
+                                ],
+            "correct"       :   "fur",
+            "explanation"   :   "fur",
+        },
+		{
+            "question"      :   "Q20: The statements above are important for us to",
+            "image"         :   "20.jpg",
+            "choices"       :   [
+                                    "manoeuvre nature",
+                                    "take care of our health",
+                                    "protect the habitat of animals",
+                                    "obey the law"
+                                ],
+            "correct"       :   "protect the habitat of animals",
+            "explanation"   :   "protect the habitat of animals",
+        },
+		{
+            "question"      :   "Q21: The roots of some plants such as the cactus are spread out widely in the ground. What is the purpose of this feature?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "To protect itself from enemies and animals",
+                                    "To obtain enough space",
+                                    "To obtain enough water",
+                                    "To obtain enough air"
+                                ],
+            "correct"       :   "To obtain enough water",
+            "explanation"   :   "To obtain enough water",
+        },
+		{
+            "question"      :   "Q22: The chilli plants in Pak Long’s garden are planted as shown in Figure 5. Provide an inferences for this planting method.",
+            "image"         :   "22.jpg",
+            "choices"       :   [
+                                    "W and Y only",
+                                    "X and Z only",
+                                    "W, X and Z only",
+                                    "W, X, Y and Z"
+                                ],
+            "correct"       :   "X and Z only",
+            "explanation"   :   "X and Z only",
+        },
+		{
+            "question"      :   "Q23: Which of the following organisms practise a symbiotic relationship?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Bird and frog",
+                                    "Hermit crab and sea anemone",
+                                    "Fungus and tiger",
+                                    "Bee and moth"
+                                ],
+            "correct"       :   "Hermit crab and sea anemone",
+            "explanation"   :   "Hermit crab and sea anemone",
+        },
+		{
+            "question"      :   "Q24: Flora and fauna are protected to",
+            "image"         :   "",
+            "choices"       :   [
+                                    "avoid natural disasters",
+                                    "increase the number of flora and fauna",
+                                    "maintain the supply of natural resources",
+                                    "prevent water, air, soil and noise pollution"
+                                ],
+            "correct"       :   "maintain the supply of natural resources",
+            "explanation"   :   "maintain the supply of natural resources",
+        },
+		{
+            "question"      :   "Q25: Which of the following basic needs do plants compete for?",
+            "image"         :   "25.jpg",
+            "choices"       :   [
+                                    "I and II only",
+                                    "I, II and III only",
+                                    "I, II and IV only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "I, II and III only",
+            "explanation"   :   "I, II and III only",
+        },
+		{
+            "question"      :   "Q26: Which of the following factors will the plants in Figure 6 compete for the least?",
+            "image"         :   "26.jpg",
+            "choices"       :   [
+                                    "Space",
+                                    "Sunlight",
+                                    "Food",
+                                    "Water"
+                                ],
+            "correct"       :   "Food",
+            "explanation"   :   "Food",
+        },
+		{
+            "question"      :   "Q27: What is one of the first side-effects of construction in a forest area?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Air and water pollution",
+                                    "Destruction of the natural habitats of living things",
+                                    "Soil erosion and landslides",
+                                    "Flash floods"
+                                ],
+            "correct"       :   "Destruction of the natural habitats of living things",
+            "explanation"   :   "Destruction of the natural habitats of living things",
+        },
+		{
+            "question"      :   "Q28: Why do human beings cut down trees in forests?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "To protect the habitats of living things",
+                                    "To prevent forest fires",
+                                    "To clear the land for farming",
+                                    "To prevent the greenhouse effect"
+                                ],
+            "correct"       :   "To clear the land for farming",
+            "explanation"   :   "To clear the land for farming",
+        },
+		{
+            "question"      :   "Q29: Which of the following best describes how shrubs growing in the forest obtain sunlight?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "By clinging on to taller trees and growing upwards",
+                                    "By having woody stems",
+                                    "By reducing the number of green leaves",
+                                    "By having small and fine leaves"
+                                ],
+            "correct"       :   "By clinging on to taller trees and growing upwards",
+            "explanation"   :   "By clinging on to taller trees and growing upwards",
+        },
+		{
+            "question"      :   "Q30: Which of the following cannot help protect the existence of flora and fauna?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Setting up forest reserves",
+                                    "Enforcing laws on illegal hunting or the collection of protected specimens",
+                                    "Setting up conservation centres",
+                                    "Providing more basic needs to threatened species"
+                                ],
+            "correct"       :   "Providing more basic needs to threatened species",
+            "explanation"   :   "Providing more basic needs to threatened species",
+        },
+		{
+            "question"      :   "Q31: Which of the following animals live in groups?",
+            "image"         :   "31.jpg",
+            "choices"       :   [
+                                    "I and II only",
+                                    "II only",
+                                    "I, II and III only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "I, II, III and IV",
+            "explanation"   :   "I, II, III and IV",
+        },
+		{
+            "question"      :   "Q32: Some animals live solitarily. One of them is",
+            "image"         :   "",
+            "choices"       :   [
+                                    "snake",
+                                    "elephant",
+                                    "bee",
+                                    "deer"
+                                ],
+            "correct"       :   "snake",
+            "explanation"   :   "snake",
+        },
+		{
+            "question"      :   "Q33: Why do animals live in groups?",
+            "image"         :   "33.jpg",
+            "choices"       :   [
+                                    "I only",
+                                    "III only",
+                                    "I and III only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "I and III only",
+            "explanation"   :   "I and III only",
+        },
+		{
+            "question"      :   "Q34: Which of the following is not a reason animals live in solitude?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "To avoid competition for food",
+                                    "To avoid competition for space",
+                                    "To avoid competition for a partner",
+                                    "To avoid predators"
+                                ],
+            "correct"       :   "To avoid competition for a partner",
+            "explanation"   :   "To avoid competition for a partner",
+        },
+		{
+            "question"      :   "Q35: What are the basic needs that animals compete for to survive?",
+            "image"         :   "35.jpg",
+            "choices"       :   [
+                                    "I and II only",
+                                    "II only",
+                                    "I, II and IV only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "I, II and IV only",
+            "explanation"   :   "I, II and IV only",
+        },
+		{
+            "question"      :   "Q36: Lions compete with each other because",
+            "image"         :   "36.jpg",
+            "choices"       :   [
+                                    "I and III only",
+                                    "II and III only",
+                                    "I, II and III only",
+                                    "I, II, III and IV"
+                                ],
+            "correct"       :   "I, II and III only",
+            "explanation"   :   "I, II and III only",
+        },
+		{
+            "question"      :   "Q37: Figure 7 shows two pots of the same plants. Both were left under the Sun for 3 weeks and given adequate amounts of water. After 3 weeks, it was found that the plant in the pot A has grown taller than the plants in pot B.  Give your inference for this observation.",
+            "image"         :   "37.jpg",
+            "choices"       :   [
+                                    "The plant in pot A has stronger roots which can absorb more water",
+                                    "The plant in pot A did not have to compete with other plants for basic needs such as water",
+                                    "The plants in pot B did not get enough sunlight",
+                                    "The plants in pot B are genetically shorter than the plant in pot A"
+                                ],
+            "correct"       :   "The plant in pot A did not have to compete with other plants for basic needs such as water",
+            "explanation"   :   "The plant in pot A did not have to compete with other plants for basic needs such as water",
+        },
+		{
+            "question"      :   "Q38: Below are the reasons plants compete with each other except",
+            "image"         :   "38.jpg",
+            "choices"       :   [
+                                    "I and II only",
+                                    "I, II and III only",
+                                    "III only",
+                                    "IV only"
+                                ],
+            "correct"       :   "IV only",
+            "explanation"   :   "IV only",
+        },
+		{
+            "question"      :   "Q39: Which animals shown below is already extinct? ",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Dinosaur",
+                                    "Eagle",
+                                    "Giraffe",
+                                    "Zebra"
+                                ],
+            "correct"       :   "Dinosaur",
+            "explanation"   :   "Dinosaur",
+        },
+    ];
+    /******* No need to edit below this line *********/
+    var currentquestion = 0, score = 0, submt=true, picked;
+    jQuery(document).ready(function($){
+        /**
+         * HTML Encoding function for alt tags and attributes to prevent messy
+         * data appearing inside tag attributes.
+         */
+        function htmlEncode(value){
+          return $(document.createElement('div')).text(value).html();
+        }
+        /**
+         * This will add the individual choices for each question to the ul#choice-block
+         *
+         * @param {choices} array The choices from each question
+         */
+        function addChoices(choices){
+            if(typeof choices !== "undefined" && $.type(choices) == "array"){
+                $('#choice-block').empty();
+                for(var i=0;i<choices.length; i++){
+                    $(document.createElement('li')).addClass('choice choice-box').attr('data-index', i).text(choices[i]).appendTo('#choice-block');                    
+                }
+            }
+        }
+        
+        /**
+         * Resets all of the fields to prepare for next question
+         */
+        function nextQuestion(){
+            submt = true;
+            $('#explanation').empty();
+            $('#question').text(quiz[currentquestion]['question']);
+            $('#pager').text('Question ' + Number(currentquestion + 1) + ' of ' + quiz.length);
+            if(quiz[currentquestion].hasOwnProperty('image') && quiz[currentquestion]['image'] != ""){
+                if($('#question-image').length == 0){
+                    $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', quiz[currentquestion]['image']).attr('alt', htmlEncode(quiz[currentquestion]['question'])).insertAfter('#question');
+                } else {
+                    $('#question-image').attr('src', quiz[currentquestion]['image']).attr('alt', htmlEncode(quiz[currentquestion]['question']));
+                }
+            } else {
+                $('#question-image').remove();
+            }
+            addChoices(quiz[currentquestion]['choices']);
+            setupButtons();
+        }
+        /**
+         * After a selection is submitted, checks if its the right answer
+         *
+         * @param {choice} number The li zero-based index of the choice picked
+         */
+        function processQuestion(choice){
+            if(quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct']){
+                $('.choice').eq(choice).css({'background-color':'#50D943'});
+                $('#explanation').html('<strong>Correct!</strong> ' + htmlEncode(quiz[currentquestion]['explanation']));
+                score++;
+            } else {
+                $('.choice').eq(choice).css({'background-color':'#D92623'});
+                $('#explanation').html('<strong>Incorrect.</strong> ' + htmlEncode(quiz[currentquestion]['explanation']));
+            }
+            currentquestion++;
+            $('#submitbutton').html('NEXT QUESTION &raquo;').on('click', function(){
+                if(currentquestion == quiz.length){
+                    endQuiz();
+                } else {
+                    $(this).text('Check Answer').css({'color':'#222'}).off('click');
+                    nextQuestion();
+                }
+            })
+        }
+        /**
+         * Sets up the event listeners for each button.
+         */
+        function setupButtons(){
+            $('.choice').on('mouseover', function(){
+                $(this).css({'background-color':'#e1e1e1'});
+            });
+            $('.choice').on('mouseout', function(){
+                $(this).css({'background-color':'#fff'});
+            })
+            $('.choice').on('click', function(){
+                picked = $(this).attr('data-index');
+                $('.choice').removeAttr('style').off('mouseout mouseover');
+                $(this).css({'border-color':'#222','font-weight':700,'background-color':'#c1c1c1'});
+                if(submt){
+                    submt=false;
+                    $('#submitbutton').css({'color':'#000'}).on('click', function(){
+                        $('.choice').off('click');
+                        $(this).off('click');
+                        processQuestion(picked);
+                    });
+                }
+            })
+        }
+        
+        /**
+         * Quiz ends, display a message.
+         */
+        function endQuiz(){
+            $('#explanation').empty();
+            $('#question').empty();
+            $('#choice-block').empty();
+            $('#submitbutton').remove();
+            $('#question').text("You got " + score + " out of " + quiz.length + " correct.");
+            $(document.createElement('h2')).css({'text-align':'center', 'font-size':'4em'}).text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');
+        }
+        /**
+         * Runs the first time and creates all of the elements for the quiz
+         */
+        function init(){
+            //add title
+            if(typeof quiztitle !== "undefined" && $.type(quiztitle) === "string"){
+                $(document.createElement('h1')).text(quiztitle).appendTo('#frame');
+            } else {
+                $(document.createElement('h1')).text("Quiz").appendTo('#frame');
+            }
+            //add pager and questions
+            if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
+                //add pager
+                $(document.createElement('p')).addClass('pager').attr('id','pager').text('Question 1 of ' + quiz.length).appendTo('#frame');
+                //add first question
+                $(document.createElement('h2')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#frame');
+                //add image if present
+                if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
+                    $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', htmlEncode(quiz[0]['question'])).appendTo('#frame');
+                }
+                $(document.createElement('p')).addClass('explanation').attr('id','explanation').html('&nbsp;').appendTo('#frame');
+            
+                //questions holder
+                $(document.createElement('ul')).attr('id', 'choice-block').appendTo('#frame');
+            
+                //add choices
+                addChoices(quiz[0]['choices']);
+            
+                //add submit button
+                $(document.createElement('div')).addClass('choice-box').attr('id', 'submitbutton').text('Check Answer').css({'font-weight':700,'color':'#222','padding':'30px 0'}).appendTo('#frame');
+            
+                setupButtons();
+            }
+        }
+        
+        init();
+    });
+    </script>
+    <style type="text/css" media="all">
+        /*css reset */
+        html,body,div,span,h1,h2,h3,h4,h5,h6,p,code,small,strike,strong,sub,sup,b,u,i{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0;} 
+        article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;} 
+        body{line-height:1; font:normal 0.9em/1em "Helvetica Neue", Helvetica, Arial, sans-serif;} 
+        ol,ul{list-style:none;}
+        strong{font-weight:700;}
+        #frame{max-width:620px;width:auto;border:1px solid #ccc;background:#fff;padding:10px;margin:3px;}
+        h1{font:normal bold 2em/1.8em "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:left;border-bottom:1px solid #999;padding:0;width:auto}
+        h2{font:italic bold 1.3em/1.2em "Helvetica Neue", Helvetica, Arial, sans-serif;padding:0;text-align:center;margin:20px 0;}
+        p.pager{margin:5px 0 5px; font:bold 1em/1em "Helvetica Neue", Helvetica, Arial, sans-serif;color:#999;}
+        img.question-image{display:block;max-width:250px;margin:10px auto;border:1px solid #ccc;width:100%;height:auto;}
+        #choice-block{display:block;list-style:none;margin:0;padding:0;}
+        #submitbutton{background:#5a6b8c;}
+        #submitbutton:hover{background:#7b8da6;}
+        #explanation{margin:0 auto;padding:20px;width:75%;}
+        .choice-box{display:block;text-align:center;margin:8px auto;padding:10px 0;border:1px solid #666;cursor:pointer;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;}
+    </style>
+</head>
+<body>
+
+<div data-role="page" class="" id="mainPage">
+    <div data-role="header" class="">
+	
+	  <h1>Science Quiz</h1>
+	    </div>
+         <div class="wrapper">
+
+        <div id="app">
+            <h1 class="h1"><center>Interaction Among Living Things</center></style></h1>
+            <br/><br/><br/><a href="#list1"><button id="start">START</button></a>
+        </div>
+    </div>
+	</div>
+	
+</div>
+<div id="list1" data-role="page">
+	<header data-role="header" data-position="fixed" data-id="appHeader">
+		<h1>Science Quiz</h1>
+		<a href="#mainPage" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-btn-left ui-nodisc-icon ui-alt-icon">Back</a>
+	</header>
+	<div data-role="content">
+    <div id="frame" role="content"></div>
+</body>
