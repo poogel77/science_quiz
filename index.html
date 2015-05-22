@@ -689,27 +689,42 @@
     </style>
 </head>
 <body>
+<div id="mainPage" data-role="page">
+<img src="imgs/banner.png" width="100%">
+<div data-role="header"> 
 
-<div data-role="page" class="" id="mainPage">
-    <div data-role="header" class="">
-	
-	  <h1>Science Quiz</h1>
-	    </div>
-         <div class="wrapper">
-
-        <div id="app">
-            <h1 class="h1"><center>Interaction Among Living Things</center></style></h1>
-            <br/><br/><br/><a href="#list1"><button id="start">START</button></a>
-        </div>
-    </div>
-	</div>
-	
+<h1>SCIENCE QUIZ</h1>
+<a href="#aboutme" data-icon="bars" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-btn-right ui-nodisc-icon ui-alt-icon">about me</a>
 </div>
+	
+<div data-role="panel" id="aboutme" data-position="right" data-display="push">
+<ul data-role="listview">
+<li data-theme="a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SCIENCE QUIZ</li><br/>
+<ol>
+<li>Chapter 1 - Interaction Among Living Things.</li><br/>
+<li>1.This app use for science quiz.</li><br/>
+<li>2.This app very useful for &nbsp;&nbsp; <br/> &nbsp;&nbsp;&nbsp;student to understand better<br/> &nbsp;&nbsp; about science subject.</li><br/>
+<li>3.For more information <br/>&nbsp;&nbsp;&nbsp;please contact me :
+ &nbsp;&nbsp;&nbsp;<a href="mailto:poogel77@gmail.com">poogel77@gmail.com</a></li><br/>
+</ol>
+</ul>
+</div>
+
+<div data-role="content">
+<h1 class="h1"><center>Chapter 1 - Interaction Among Living Things.</center></h1>
+<!-- content --><br/><br/><br/>
+<ul data-role="listview"><a href="#list1" class="ui-btn ui-corner-all" >START</a></ul>
+</div>
+</div>
+
+
+		
 <div id="list1" data-role="page">
 	<header data-role="header" data-position="fixed" data-id="appHeader">
-		<h1>Science Quiz</h1>
-		<a href="#mainPage" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-btn-left ui-nodisc-icon ui-alt-icon">Back</a>
+		<h1>SCIENCE QUIZ</h1>
+		<a href="#mainPage" class="ui-btn ui-icon-back ui-btn-icon-notext ui-btn-left ui-nodisc-icon ui-alt-icon">Back</a>
 	</header>
 	<div data-role="content">
     <div id="frame" role="content"></div>
+	</div></div>
 </body>
