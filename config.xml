@@ -51,7 +51,7 @@ Poogelenthiran
 <!-- Plugins -->
 
     <!-- Core plugins -->
-    <plugin name="org.apache.cordova.splashscreen" spec="0.3.4" source="pgb" />
+    <plugin name="org.apache.cordova.splashscreen" spec="1.0.0" source="pgb" />
 
 
     <!--
